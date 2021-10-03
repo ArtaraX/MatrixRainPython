@@ -7,18 +7,14 @@ WIDTH = 1920
 HEIGHT = 1050
 FONT_SIZE = 30
 background_color = (0,0,0)
-# alpha_value = randrange(30, 40) # start, end, step
 alpha_value = 25
-# char_color = (0,255,255)
-
 FPS = 60
 
 x = 0
 y = 0
 os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (x,y)
 
-chars = [chr(unicode) for unicode in range(12449, 12539)]  # generate list of katakana
-# chars = [chr(unicode) for unicode in range(12437, 12539)] 
+
 
 pg.init()
 clock = pg.time.Clock()
@@ -30,16 +26,16 @@ display_surface.set_alpha(alpha_value)
 
 font = pg.font.Font('MS Mincho.ttf', FONT_SIZE)
 
-
-
-
-
 pg.display.flip()
 
 
 def generate_colors():
     r, g, b = randrange(255), randrange(255), randrange(255)
     return (r,g,b)
+
+chars = [chr(unicode) for unicode in range(12449, 12539)]  # generate list of katakana based on integer values for unicode
+
+colored_chars = [font.render(char, True, generate_colors()) for char in chars]
 
 class Katakana:
     def __init__(self, x, y):
@@ -55,8 +51,6 @@ class Katakana:
         self.y = self.y + self.speed if self.y < HEIGHT else -FONT_SIZE * randrange(1, 20)
         
 
-
-colored_chars = [font.render(char, True, generate_colors()) for char in chars]
 
 # list of Katakana-objects
 katakana_stream = [Katakana(x, randrange(-HEIGHT, 0)) for x in range(0, WIDTH, FONT_SIZE)]
@@ -90,9 +84,7 @@ def main_loop():
                 if event.key == pg.K_ESCAPE:
                     run = False
                 
-                
-                
-
+               
             if event.type == pg.QUIT:
                 run = False
 
